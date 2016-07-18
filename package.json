@@ -14,7 +14,7 @@
     "preghpages": "npm run build && rm -rf gh-pages && cp -r src gh-pages && cp index.html build/bundle.js gh-pages",
     "ghpages": "npm run preghpages && ghpages -p gh-pages",
     "gh-pages": "npm run ghpages",
-    "serve": "cd src && python -m SimpleHTTPServer 5555",
+    "serve": "./node_modules/.bin/http-server ./src -p 8888",
     "serve-js": "webpack-dev-server --content-base src --progress --watch --history-api-fallback --inline --hot --host 0.0.0.0"
   },
   "repository": {
@@ -46,6 +46,7 @@
     "babel-runtime": "^6.3.13",
     "css-loader": "^0.23.0",
     "ghpages": "0.0.3",
+    "http-server": "^0.9.0",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",

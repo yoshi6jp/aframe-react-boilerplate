@@ -12,7 +12,12 @@ class BoilerplateScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: 'red'
+      color: 'red',
+      speed: 0.005,
+      posX: 0,
+      posY: 0,
+      posZ: 0,
+      dir: null
     }
   }
 
@@ -23,10 +28,69 @@ class BoilerplateScene extends React.Component {
     });
   };
 
+  componentDidMount (){
+    setInterval(() => {
+      let {posX, posY, posZ, speed} = this.state
+      switch(this.state.dir){
+        case "f":
+          this.setState({posZ: posZ - speed})
+          break;
+        case "b":
+          this.setState({posZ: posZ + speed})
+          break;
+        case "u":
+          this.setState({posY: posY + speed})
+          break;
+        case "d":
+          this.setState({posY: posY - speed})
+          break;
+        case "r":
+          this.setState({posX: posX + speed})
+          break;
+        case "l":
+          this.setState({posX: posX - speed})
+          break;
+      }
+    },1000/60)
+    let recognition = new webkitSpeechRecognition()
+    recognition.lang = "ja-JP"
+    recognition.continuous = true
+    recognition.onresult = (event)=> {
+      let results = event.results
+      let text = results[results.length-1][0].transcript
+      console.log(text)
+      switch(true){
+        case /前|全身/.test(text):
+          this.setState({dir:"f"})
+          break;
+        case /後ろ|交代|止まれ/.test(text):
+          this.setState({dir:"b"})
+          break;
+        case /右/.test(text):
+          this.setState({dir:"r"})
+          break;
+        case /左/.test(text):
+          this.setState({dir:"l"})
+          break;
+        case /上|上昇/.test(text):
+          this.setState({dir:"u"})
+          break;
+        case /下|加工/.test(text):
+          this.setState({dir:"d"})
+          break;
+        case /停止|ストップ/.test(text):
+          this.setState({dir:null})
+          break;
+      }
+    }
+    recognition.start()
+  }
+
   render () {
+    let pos = `${this.state.posX} ${this.state.posY} ${this.state.posZ}`
     return (
       <Scene>
-        <Camera><Cursor/></Camera>
+        <Camera position={pos}><Cursor fuse={true}/></Camera>
 
         <Sky/>
 
