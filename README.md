@@ -1,6 +1,7 @@
 ## aframe-react-boilerplate
 
 - [demo](https://yoshi6jp.github.io/aframe-react-boilerplate/index.html)
+- ![](qr_img.png)
 
 An [aframe-react](https://github.com/ngokevin/aframe-react) boilerplate, combining [A-Frame](https://aframe.io) with React.
 
